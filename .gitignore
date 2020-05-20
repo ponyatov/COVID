@@ -8,3 +8,6 @@ lib/
 lib64
 share/
 pyvenv.cfg
+
+Cargo.lock
+target/

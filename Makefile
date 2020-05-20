@@ -12,12 +12,14 @@ PY  = $(CWD)/bin/python3
 IP	 ?= 127.0.0.1
 PORT ?= 19999
 
-.PHONY: all py
+.PHONY: all py rust
 all: py
 
 py: $(PY) $(MODULE).py $(MODULE).ini
 	IP=$(IP) PORT=$(PORT) $^
 
+rust:
+	IP=$(IP) PORT=$(PORT) RUST_LOG=debug cargo run
 
 
 .PHONY: install
@@ -48,8 +50,10 @@ debian:
 
 .PHONY: master shadow release zip
 
-MERGE  = Makefile README.md .gitignore .vscode apt.txt requirements.txt
+MERGE  = Makefile README.md LICENSE
+MERGE += .gitignore .vscode apt.txt requirements.txt
 MERGE += $(MODULE).py $(MODULE).ini static templates
+MERGE += Cargo.toml src
 
 master:
 	git checkout $@
