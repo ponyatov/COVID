@@ -7,6 +7,8 @@ REL = $(shell git rev-parse --short=4 HEAD)
 PIP = $(CWD)/bin/pip3
 PY  = $(CWD)/bin/python3
 
+WGET = wget -c --no-check-certificate
+
 
 
 IP	 ?= 127.0.0.1
@@ -23,7 +25,7 @@ rust:
 
 
 .PHONY: install
-install: debian $(PIP)
+install: debian $(PIP) js
 	$(PIP) install    -r requirements.txt
 	$(MAKE) requirements.txt
 
@@ -45,6 +47,25 @@ requirements.txt: $(PIP)
 debian:
 	sudo apt update
 	sudo apt install -u `cat apt.txt`
+
+.PHONY: js
+js: static/jquery.js static/darkly.css \
+	static/bootstrap.css static/bootstrap.css.map static/bootstrap.js
+
+JQUERY_VER = 3.4.1
+static/jquery.js:
+	$(WGET) -O $@ https://code.jquery.com/jquery-$(JQUERY_VER).min.js
+
+BOOTSTRAP_VER = $(JQUERY_VER)
+BOOTSTRAP_URL = https://stackpath.bootstrapcdn.com/bootstrap/$(BOOTSTRAP_VER)
+static/darkly.css:
+	$(WGET) -O $@ https://bootswatch.com/3/darkly/bootstrap.min.css
+static/bootstrap.css:
+	$(WGET) -O $@ $(BOOTSTRAP_URL)/css/bootstrap.min.css
+static/bootstrap.css.map:
+	$(WGET) -O $@ $(BOOTSTRAP_URL)/css/bootstrap.min.css.map
+static/bootstrap.js:
+	$(WGET) -O $@ $(BOOTSTRAP_URL)/js/bootstrap.min.js
 
 
 

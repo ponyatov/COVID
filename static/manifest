@@ -1,0 +1,14 @@
+{
+  "name": "covid",
+  "short_name": "covid",
+  "description": "(meta)programming language for IoT-chipping over 5G",
+  "display": "standalone",
+  "start_url": ".",
+  "theme_color": "#222222",
+  "background_color": "#222222",
+  "icons": [{
+    "src": "/logo.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }]
+}
